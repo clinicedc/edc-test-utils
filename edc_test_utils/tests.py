@@ -10,12 +10,16 @@ from .default_test_settings import default_test_settings
 class TestUtils(TestCase):
     def test_(self):
         DEFAULT_SETTINGS = {}
+
+        os.environ["TRAVIS"] = None
         base_dir = os.path.dirname(os.path.abspath(__file__))
 
-        default_test_settings(default_settings=DEFAULT_SETTINGS, base_dir=base_dir)
+        default_test_settings(
+            default_settings=DEFAULT_SETTINGS, base_dir=base_dir)
 
         self.assertIn(
-            "sqlite", DEFAULT_SETTINGS.get("DATABASES").get("default").get("ENGINE")
+            "sqlite", DEFAULT_SETTINGS.get(
+                "DATABASES").get("default").get("ENGINE")
         )
 
     def test_2(self):
@@ -39,8 +43,10 @@ class TestUtils(TestCase):
         DEFAULT_SETTINGS = {}
         base_dir = os.path.dirname(os.path.abspath(__file__))
         os.environ["TRAVIS"] = "True"
-        default_test_settings(default_settings=DEFAULT_SETTINGS, base_dir=base_dir)
+        default_test_settings(
+            default_settings=DEFAULT_SETTINGS, base_dir=base_dir)
 
         self.assertIn(
-            "mysql", DEFAULT_SETTINGS.get("DATABASES").get("default").get("ENGINE")
+            "mysql", DEFAULT_SETTINGS.get(
+                "DATABASES").get("default").get("ENGINE")
         )
