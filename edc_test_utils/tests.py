@@ -11,7 +11,7 @@ class TestUtils(TestCase):
     def test_(self):
         DEFAULT_SETTINGS = {}
 
-        os.environ["TRAVIS"] = None
+        os.environ["TRAVIS"] = ""
         base_dir = os.path.dirname(os.path.abspath(__file__))
 
         default_test_settings(
