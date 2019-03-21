@@ -70,11 +70,13 @@ class DefaultTestSettings:
             USE_TZ=True,
             COUNTRY="botswana",
             EDC_BOOTSTRAP=None,
-            ETC_DIR=os.path.join(self.base_dir, "etc"),
+            ETC_DIR=os.path.join(self.base_dir, self.app_name, "tests", "etc"),
             GIT_DIR=self.base_dir,
             LIVE_SYSTEM=False,
             REVIEWER_SITE_ID=0,
             SITE_ID=40,
+            HOLIDAY_FILE=os.path.join(
+                self.base_dir, self.app_name, "tests", "holidays.csv"),
             DASHBOARD_URL_NAMES={
                 "subject_models_url": "subject_models_url",
                 "subject_listboard_url": "ambition_dashboard:subject_listboard_url",
@@ -103,7 +105,7 @@ class DefaultTestSettings:
 
         # update settings if running runtests directly from the command line
         if self.calling_file == sys.argv[0]:
-            key_path = os.path.join(self.base_dir, "etc")
+            key_path = self.kwargs.get('ETC_DIR')
             if not os.path.exists(key_path):
                 os.mkdir(key_path)
             self.kwargs.update(DEBUG=False, KEY_PATH=key_path,
