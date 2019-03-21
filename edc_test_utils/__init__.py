@@ -1,1 +1,1 @@
-from .default_test_settings import default_test_settings  # noqa
+from .default_test_settings import DefaultTestSettings  # noqa
