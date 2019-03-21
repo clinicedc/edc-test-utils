@@ -10,14 +10,12 @@ class DisableMigrations:
         return None
 
 
-def default_test_settings(default_settings=None, base_dir=None, calling_file=None):
+def default_test_settings(base_dir=None, calling_file=None, **kwargs):
 
-    print(sys.argv)
-    print(calling_file)
     if calling_file:
         calling_file = os.path.basename(calling_file)
 
-    default_settings.update(
+    kwargs.update(
         BASE_DIR=base_dir,
         ALLOWED_HOSTS=["localhost"],
         # AUTH_USER_MODEL='custom_user.CustomUser',
@@ -84,12 +82,13 @@ def default_test_settings(default_settings=None, base_dir=None, calling_file=Non
         key_path = os.path.join(base_dir, "etc")
         if not os.path.exists(key_path):
             os.mkdir(key_path)
-        default_settings.update(DEBUG=False, KEY_PATH=key_path, AUTO_CREATE_KEYS=False)
+        kwargs.update(
+            DEBUG=False, KEY_PATH=key_path, AUTO_CREATE_KEYS=False)
         if len(os.listdir(key_path)) == 0:
-            default_settings.update(AUTO_CREATE_KEYS=True)
+            kwargs.update(AUTO_CREATE_KEYS=True)
 
     if os.environ.get("TRAVIS"):
-        default_settings.update(
+        kwargs.update(
             DATABASES={
                 "default": {
                     "ENGINE": "django.db.backends.mysql",
@@ -102,4 +101,4 @@ def default_test_settings(default_settings=None, base_dir=None, calling_file=Non
             }
         )
 
-    return default_settings
+    return kwargs
