@@ -12,15 +12,21 @@ class DisableMigrations:
 
 class DefaultTestSettings:
 
-    def __init__(self, calling_file=None, use_test_urls=None, add_dashboard_middleware=None, **kwargs):
+    def __init__(self, calling_file=None, use_test_urls=None, add_dashboard_middleware=None,
+                 template_dirs=None, **kwargs):
         self.calling_file = os.path.basename(
             calling_file) if calling_file else None
         self.base_dir = kwargs.get("BASE_DIR")
         self.app_name = kwargs.get("APP_NAME")
         self.use_test_urls = use_test_urls
         self.add_dashboard_middleware = add_dashboard_middleware
-        self.kwargs = kwargs
+        self.kwargs = {}
+
         self.update_settings()
+        self.post_update()
+        self.kwargs.update(**kwargs)
+        if template_dirs:
+            self.kwargs['TEMPLATES'][0]['DIRS'] = template_dirs
 
     @property
     def settings(self):
@@ -55,6 +61,7 @@ class DefaultTestSettings:
                 "django.contrib.auth.middleware.AuthenticationMiddleware",
                 "django.contrib.messages.middleware.MessageMiddleware",
                 "django.middleware.clickjacking.XFrameOptionsMiddleware",
+                "django.contrib.sites.middleware.CurrentSiteMiddleware",
             ],
             LANGUAGE_CODE="en-us",
             TIME_ZONE="UTC",
@@ -62,7 +69,7 @@ class DefaultTestSettings:
             USE_L10N=True,
             USE_TZ=True,
             COUNTRY="botswana",
-            EDC_BOOTSTRAP=3,
+            EDC_BOOTSTRAP=None,
             ETC_DIR=os.path.join(self.base_dir, "etc"),
             GIT_DIR=self.base_dir,
             LIVE_SYSTEM=False,
@@ -91,7 +98,6 @@ class DefaultTestSettings:
             PASSWORD_HASHERS=(
                 "django.contrib.auth.hashers.MD5PasswordHasher",),
         )
-        self.post_update()
 
     def post_update(self):
 
@@ -120,7 +126,7 @@ class DefaultTestSettings:
             )
 
         if self.use_test_urls:
-            self.kwargs.update(ROOT_URLCONF=f"{self.kwargs}.tests.urls")
+            self.kwargs.update(ROOT_URLCONF=f"{self.app_name}.tests.urls")
         else:
             self.kwargs.update(ROOT_URLCONF=f"{self.app_name}.urls")
 
