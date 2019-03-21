@@ -1,0 +1,4 @@
+[run]
+include = edc_test_utils/*
+omit = edc_test_utils/tests/*
+branch = 1
