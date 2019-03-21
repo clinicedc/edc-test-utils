@@ -12,12 +12,11 @@ class TestUtils(TestCase):
         DEFAULT_SETTINGS = {}
         base_dir = os.path.dirname(os.path.abspath(__file__))
 
-        default_test_settings(
-            default_settings=DEFAULT_SETTINGS,
-            base_dir=base_dir)
+        default_test_settings(default_settings=DEFAULT_SETTINGS, base_dir=base_dir)
 
-        self.assertIn('sqlite', DEFAULT_SETTINGS.get(
-            'DATABASES').get('default').get('ENGINE'))
+        self.assertIn(
+            "sqlite", DEFAULT_SETTINGS.get("DATABASES").get("default").get("ENGINE")
+        )
 
     def test_2(self):
         DEFAULT_SETTINGS = {}
@@ -27,20 +26,21 @@ class TestUtils(TestCase):
             default_test_settings(
                 default_settings=DEFAULT_SETTINGS,
                 base_dir=base_dir,
-                calling_file=__file__)
+                calling_file=__file__,
+            )
 
-        self.assertFalse(DEFAULT_SETTINGS.get('DEBUG'))
-        self.assertEqual(DEFAULT_SETTINGS.get('KEY_PATH'),
-                         os.path.join(base_dir, 'etc'))
+        self.assertFalse(DEFAULT_SETTINGS.get("DEBUG"))
+        self.assertEqual(
+            DEFAULT_SETTINGS.get("KEY_PATH"), os.path.join(base_dir, "etc")
+        )
         self.assertIn("AUTO_CREATE_KEYS", DEFAULT_SETTINGS)
 
     def test_3(self):
         DEFAULT_SETTINGS = {}
         base_dir = os.path.dirname(os.path.abspath(__file__))
         os.environ["TRAVIS"] = "True"
-        default_test_settings(
-            default_settings=DEFAULT_SETTINGS,
-            base_dir=base_dir)
+        default_test_settings(default_settings=DEFAULT_SETTINGS, base_dir=base_dir)
 
-        self.assertIn('mysql', DEFAULT_SETTINGS.get(
-            'DATABASES').get('default').get('ENGINE'))
+        self.assertIn(
+            "mysql", DEFAULT_SETTINGS.get("DATABASES").get("default").get("ENGINE")
+        )
