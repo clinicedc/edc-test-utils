@@ -12,31 +12,53 @@ class DisableMigrations:
 
 class DefaultTestSettings:
 
-    def __init__(self, calling_file=None, use_test_urls=None, add_dashboard_middleware=None,
-                 template_dirs=None, **kwargs):
+    def __init__(self, base_dir=None, app_name=None, calling_file=None,
+                 etc_dir=None, use_test_urls=None, add_dashboard_middleware=None,
+                 template_dirs=None, installed_apps=None, **kwargs):
+
         self.calling_file = os.path.basename(
             calling_file) if calling_file else None
-        self.base_dir = kwargs.get("BASE_DIR")
-        self.app_name = kwargs.get("APP_NAME")
-        self.use_test_urls = use_test_urls
-        self.add_dashboard_middleware = add_dashboard_middleware
-        self.kwargs = {}
+        self.base_dir = base_dir or kwargs.get("BASE_DIR")
+        self.app_name = app_name or kwargs.get("APP_NAME")
+        self.installed_apps = installed_apps or kwargs.get("INSTALLED_APPS")
+        self.etc_dir = etc_dir or kwargs.get("ETC_DIR")
 
-        self.update_settings()
-        self.post_update()
-        self.kwargs.update(**kwargs)
+        self.settings = dict(
+            APP_NAME=self.app_name,
+            BASE_DIR=self.base_dir,
+            INSTALLED_APPS=self.installed_apps or [],
+            ETC_DIR=self.etc_dir,
+        )
+
+        self._update_defaults()
+        # override / add from params
+        self.settings.update(**kwargs)
+
         if template_dirs:
-            self.kwargs['TEMPLATES'][0]['DIRS'] = template_dirs
+            self.settings['TEMPLATES'][0]['DIRS'] = template_dirs
 
-    @property
-    def settings(self):
-        return self.kwargs
+        if use_test_urls:
+            self.settings.update(ROOT_URLCONF=f"{self.app_name}.tests.urls")
+        else:
+            self.settings.update(ROOT_URLCONF=f"{self.app_name}.urls")
 
-    def update_settings(self):
+        if add_dashboard_middleware:
+            self.settings["MIDDLEWARE"].extend(
+                [
+                    "edc_dashboard.middleware.DashboardMiddleware",
+                    "edc_subject_dashboard.middleware.DashboardMiddleware",
+                ]
+            )
+
+        if "django_crypto_fields.apps.AppConfig" in self.settings.get('INSTALLED_APPS'):
+            self._manage_encryption_keys()
+        self._check_travis()
+
+    def _update_defaults(self):
         """Assumes BASE_DIR, APP_NAME, INSTALLED_APPS are in kwargs.
         """
 
-        self.kwargs.update(
+        self.settings.update(
             ALLOWED_HOSTS=["localhost"],
             # AUTH_USER_MODEL='custom_user.CustomUser',
             STATIC_URL="/static/",
@@ -70,17 +92,14 @@ class DefaultTestSettings:
             USE_TZ=True,
             COUNTRY="botswana",
             EDC_BOOTSTRAP=None,
-            ETC_DIR=os.path.join(self.base_dir, "etc"),
             GIT_DIR=self.base_dir,
             LIVE_SYSTEM=False,
             REVIEWER_SITE_ID=0,
             SITE_ID=40,
-            DASHBOARD_URL_NAMES={
-                "subject_models_url": "subject_models_url",
-                "subject_listboard_url": "ambition_dashboard:subject_listboard_url",
-                "screening_listboard_url": "ambition_dashboard:screening_listboard_url",
-                "subject_dashboard_url": "ambition_dashboard:subject_dashboard_url",
-            },
+            HOLIDAY_FILE=os.path.join(
+                self.base_dir, self.app_name, "tests", "holidays.csv"),
+            DASHBOARD_URL_NAMES={},
+            DASHBOARD_BASE_TEMPLATES={},
             EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend",
             EMAIL_CONTACTS={
                 "data_request": "someone@example.com",
@@ -99,20 +118,20 @@ class DefaultTestSettings:
                 "django.contrib.auth.hashers.MD5PasswordHasher",),
         )
 
-    def post_update(self):
-
+    def _manage_encryption_keys(self):
         # update settings if running runtests directly from the command line
         if self.calling_file == sys.argv[0]:
-            key_path = os.path.join(self.base_dir, "etc")
+            key_path = self.settings.get('ETC_DIR')
             if not os.path.exists(key_path):
                 os.mkdir(key_path)
-            self.kwargs.update(DEBUG=False, KEY_PATH=key_path,
-                               AUTO_CREATE_KEYS=False)
-            if len(os.listdir(key_path)) == 0:
-                self.kwargs.update(AUTO_CREATE_KEYS=True)
+            auto_create_keys = True if len(
+                os.listdir(key_path)) == 0 else False
+            self.settings.update(DEBUG=False, KEY_PATH=key_path,
+                                 AUTO_CREATE_KEYS=auto_create_keys)
 
+    def _check_travis(self):
         if os.environ.get("TRAVIS"):
-            self.kwargs.update(
+            self.settings.update(
                 DATABASES={
                     "default": {
                         "ENGINE": "django.db.backends.mysql",
@@ -123,17 +142,4 @@ class DefaultTestSettings:
                         "PORT": "",
                     }
                 }
-            )
-
-        if self.use_test_urls:
-            self.kwargs.update(ROOT_URLCONF=f"{self.app_name}.tests.urls")
-        else:
-            self.kwargs.update(ROOT_URLCONF=f"{self.app_name}.urls")
-
-        if self.add_dashboard_middleware:
-            self.kwargs["MIDDLEWARE"].extend(
-                [
-                    "edc_dashboard.middleware.DashboardMiddleware",
-                    "edc_subject_dashboard.middleware.DashboardMiddleware",
-                ]
             )
