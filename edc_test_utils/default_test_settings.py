@@ -14,6 +14,7 @@ class DefaultTestSettings:
 
     def __init__(self, base_dir=None, app_name=None, calling_file=None,
                  etc_dir=None, use_test_urls=None, add_dashboard_middleware=None,
+                 add_lab_dashboard_middleware=None,
                  template_dirs=None, installed_apps=None, **kwargs):
 
         self.calling_file = os.path.basename(
@@ -37,10 +38,7 @@ class DefaultTestSettings:
         if template_dirs:
             self.settings['TEMPLATES'][0]['DIRS'] = template_dirs
 
-        if use_test_urls:
-            self.settings.update(ROOT_URLCONF=f"{self.app_name}.tests.urls")
-        else:
-            self.settings.update(ROOT_URLCONF=f"{self.app_name}.urls")
+        self.update_root_urlconf(use_test_urls)
 
         if add_dashboard_middleware:
             self.settings["MIDDLEWARE"].extend(
@@ -50,9 +48,23 @@ class DefaultTestSettings:
                 ]
             )
 
+        if add_lab_dashboard_middleware:
+            self.settings["MIDDLEWARE"].extend(
+                [
+                    "edc_lab_dashboard.middleware.DashboardMiddleware",
+                ]
+            )
         if "django_crypto_fields.apps.AppConfig" in self.settings.get('INSTALLED_APPS'):
             self._manage_encryption_keys()
         self._check_travis()
+
+    def update_root_urlconf(self, use_test_urls):
+        if "ROOT_URLCONF" not in self.settings:
+            if use_test_urls:
+                self.settings.update(
+                    ROOT_URLCONF=f"{self.app_name}.tests.urls")
+            else:
+                self.settings.update(ROOT_URLCONF=f"{self.app_name}.urls")
 
     def _update_defaults(self):
         """Assumes BASE_DIR, APP_NAME, INSTALLED_APPS are in kwargs.
