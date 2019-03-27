@@ -83,6 +83,7 @@ class DefaultTestSettings:
                         "context_processors": [
                             "django.contrib.auth.context_processors.auth",
                             "django.contrib.messages.context_processors.messages",
+                            "django.template.context_processors.request",
                         ]
                     },
                 }
@@ -103,7 +104,7 @@ class DefaultTestSettings:
             USE_L10N=True,
             USE_TZ=True,
             COUNTRY="botswana",
-            EDC_BOOTSTRAP=None,
+            EDC_BOOTSTRAP=3,
             GIT_DIR=self.base_dir,
             LIVE_SYSTEM=False,
             REVIEWER_SITE_ID=0,
