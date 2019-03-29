@@ -16,13 +16,12 @@ class TestUtils(TestCase):
             DEFAULT_SETTINGS = DefaultTestSettings(
                 calling_file=__file__,
                 BASE_DIR=base_dir,
-                APP_NAME='edc_test_utils',
+                APP_NAME="edc_test_utils",
                 ETC_DIR=os.path.join(base_dir, "etc"),
             ).settings
 
         self.assertIn(
-            "sqlite", DEFAULT_SETTINGS.get(
-                "DATABASES").get("default").get("ENGINE")
+            "sqlite", DEFAULT_SETTINGS.get("DATABASES").get("default").get("ENGINE")
         )
 
     def test_3(self):
@@ -32,13 +31,12 @@ class TestUtils(TestCase):
             DEFAULT_SETTINGS = DefaultTestSettings(
                 calling_file="tests.py",
                 BASE_DIR=base_dir,
-                APP_NAME='edc_test_utils',
+                APP_NAME="edc_test_utils",
                 ETC_DIR=os.path.join(base_dir, "etc"),
             ).settings
 
         self.assertIn(
-            "mysql", DEFAULT_SETTINGS.get(
-                "DATABASES").get("default").get("ENGINE")
+            "mysql", DEFAULT_SETTINGS.get("DATABASES").get("default").get("ENGINE")
         )
 
     def test_encryption_keys(self):
