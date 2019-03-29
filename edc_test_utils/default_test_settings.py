@@ -78,7 +78,13 @@ class DefaultTestSettings:
             ALLOWED_HOSTS=["localhost"],
             # AUTH_USER_MODEL='custom_user.CustomUser',
             STATIC_URL="/static/",
-            DATABASES={"default": {"ENGINE": "django.db.backends.sqlite3"}},
+            DATABASES={
+                # required for tests when acting as a server that deserializes
+                "default": {
+                    "ENGINE": "django.db.backends.sqlite3",
+                    "NAME": os.path.join(self.base_dir, "db.sqlite3"),
+                }
+            },
             TEMPLATES=[
                 {
                     "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -126,6 +132,9 @@ class DefaultTestSettings:
             },
             EMAIL_ENABLED=True,
             TWILIO_ENABLED=False,
+            SUBJECT_CONSENT_MODEL=f"{self.app_name}.subjectconsent",
+            SUBJECT_VISIT_MODEL=f"{self.app_name}.subjectvisit",
+            SUBJECT_REQUISITION_MODEL=f"{self.app_name}.subjectrequisition",
             DJANGO_COLLECT_OFFLINE_FILES_REMOTE_HOST=None,
             DJANGO_COLLECT_OFFLINE_FILES_USB_VOLUME=None,
             DJANGO_COLLECT_OFFLINE_FILES_USER=None,
