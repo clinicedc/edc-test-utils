@@ -25,8 +25,7 @@ class DefaultTestSettings:
         **kwargs,
     ):
 
-        self.calling_file = os.path.basename(
-            calling_file) if calling_file else None
+        self.calling_file = os.path.basename(calling_file) if calling_file else None
         self.base_dir = base_dir or kwargs.get("BASE_DIR")
         self.app_name = app_name or kwargs.get("APP_NAME")
         self.installed_apps = installed_apps or kwargs.get("INSTALLED_APPS")
@@ -67,8 +66,7 @@ class DefaultTestSettings:
     def update_root_urlconf(self, use_test_urls):
         if "ROOT_URLCONF" not in self.settings:
             if use_test_urls:
-                self.settings.update(
-                    ROOT_URLCONF=f"{self.app_name}.tests.urls")
+                self.settings.update(ROOT_URLCONF=f"{self.app_name}.tests.urls")
             else:
                 self.settings.update(ROOT_URLCONF=f"{self.app_name}.urls")
 
@@ -143,8 +141,7 @@ class DefaultTestSettings:
             DJANGO_COLLECT_OFFLINE_SERVER_IP=None,
             DEFAULT_FILE_STORAGE="inmemorystorage.InMemoryStorage",
             MIGRATION_MODULES=DisableMigrations(),
-            PASSWORD_HASHERS=(
-                "django.contrib.auth.hashers.MD5PasswordHasher",),
+            PASSWORD_HASHERS=("django.contrib.auth.hashers.MD5PasswordHasher",),
         )
 
     def _manage_encryption_keys(self):
@@ -153,8 +150,7 @@ class DefaultTestSettings:
             key_path = self.settings.get("ETC_DIR")
             if not os.path.exists(key_path):
                 os.mkdir(key_path)
-            auto_create_keys = True if len(
-                os.listdir(key_path)) == 0 else False
+            auto_create_keys = True if len(os.listdir(key_path)) == 0 else False
             self.settings.update(
                 DEBUG=False, KEY_PATH=key_path, AUTO_CREATE_KEYS=auto_create_keys
             )
