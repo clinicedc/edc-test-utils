@@ -61,7 +61,7 @@ class DefaultTestSettings:
             )
         if "django_crypto_fields.apps.AppConfig" in self.settings.get("INSTALLED_APPS"):
             self._manage_encryption_keys()
-        self._check_travis()
+        self.check_travis()
 
     def update_root_urlconf(self, use_test_urls):
         if "ROOT_URLCONF" not in self.settings:
@@ -155,7 +155,7 @@ class DefaultTestSettings:
                 DEBUG=False, KEY_PATH=key_path, AUTO_CREATE_KEYS=auto_create_keys
             )
 
-    def _check_travis(self):
+    def check_travis(self):
         if os.environ.get("TRAVIS"):
             self.settings.update(
                 DATABASES={
