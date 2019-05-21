@@ -63,7 +63,7 @@ class DefaultTestSettings:
             self._manage_encryption_keys()
         self.check_travis()
 
-    def update_root_urlconf(self, use_test_urls):
+    def update_root_urlconf(self, use_test_urls=None):
         if "ROOT_URLCONF" not in self.settings:
             if use_test_urls:
                 self.settings.update(ROOT_URLCONF=f"{self.app_name}.tests.urls")
