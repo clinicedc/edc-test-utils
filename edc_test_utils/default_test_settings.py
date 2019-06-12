@@ -119,6 +119,7 @@ class DefaultTestSettings:
             LIVE_SYSTEM=False,
             REVIEWER_SITE_ID=0,
             SITE_ID=40,
+            USE_EDC_FACILITY_DEFAULTS=True,
             HOLIDAY_FILE=os.path.join(
                 self.base_dir, self.app_name, "tests", "holidays.csv"
             ),
