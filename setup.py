@@ -30,7 +30,10 @@ setup(
     long_description=README,
     zip_safe=False,
     keywords='django edc tests',
-    install_requires=[],
+    install_requires=[
+        "model_mommy",
+        "faker",
+    ],
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
