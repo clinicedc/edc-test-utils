@@ -140,6 +140,8 @@ class DefaultTestSettings:
             DJANGO_COLLECT_OFFLINE_FILES_USB_VOLUME=None,
             DJANGO_COLLECT_OFFLINE_FILES_USER=None,
             DJANGO_COLLECT_OFFLINE_SERVER_IP=None,
+            ADVERSE_EVENT_APP_LABEL=None,
+            ADVERSE_EVENT_ADMIN_SITE=None,
             DEFAULT_FILE_STORAGE="inmemorystorage.InMemoryStorage",
             MIGRATION_MODULES=DisableMigrations(),
             PASSWORD_HASHERS=("django.contrib.auth.hashers.MD5PasswordHasher",),
@@ -147,7 +149,7 @@ class DefaultTestSettings:
 
     def _manage_encryption_keys(self):
         # update settings if running runtests directly from the command line
-        if self.calling_file == sys.argv[0]:
+        if self.calling_file and self.calling_file == sys.argv[0]:
             key_path = self.settings.get("ETC_DIR")
             if not os.path.exists(key_path):
                 os.mkdir(key_path)
