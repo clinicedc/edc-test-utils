@@ -140,6 +140,7 @@ class DefaultTestSettings:
             DJANGO_COLLECT_OFFLINE_FILES_USB_VOLUME=None,
             DJANGO_COLLECT_OFFLINE_FILES_USER=None,
             DJANGO_COLLECT_OFFLINE_SERVER_IP=None,
+            DATA_DICTIONARY_APP_LABELS=[],
             ADVERSE_EVENT_APP_LABEL=None,
             ADVERSE_EVENT_ADMIN_SITE=None,
             DEFAULT_FILE_STORAGE="inmemorystorage.InMemoryStorage",
