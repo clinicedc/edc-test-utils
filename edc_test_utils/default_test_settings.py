@@ -36,6 +36,7 @@ class DefaultTestSettings:
             BASE_DIR=self.base_dir,
             INSTALLED_APPS=self.installed_apps or [],
             ETC_DIR=self.etc_dir,
+            TEST_DIR=os.path.join(self.base_dir, self.app_name, "tests"),
         )
 
         self._update_defaults()
