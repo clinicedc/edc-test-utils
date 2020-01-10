@@ -134,6 +134,7 @@ class DefaultTestSettings:
             },
             EMAIL_ENABLED=True,
             TWILIO_ENABLED=False,
+            TWILIO_TEST_RECIPIENT="+15555555555",
             SUBJECT_CONSENT_MODEL=f"{self.app_name}.subjectconsent",
             SUBJECT_VISIT_MODEL=f"{self.app_name}.subjectvisit",
             SUBJECT_REQUISITION_MODEL=f"{self.app_name}.subjectrequisition",
