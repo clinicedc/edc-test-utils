@@ -145,9 +145,7 @@ class DefaultTestSettings:
             DJANGO_COLLECT_OFFLINE_FILES_USER=None,
             DJANGO_COLLECT_OFFLINE_SERVER_IP=None,
             EDC_RANDOMIZATION_LIST_MODEL="edc_randomization.randomizationlist",
-            EDC_RANDOMIZATION_LIST_FILE=os.path.join(
-                self.etc_dir, "randomization_list.csv"
-            ),
+            EDC_RANDOMIZATION_LIST_PATH=self.etc_dir,
             DATA_DICTIONARY_APP_LABELS=[],
             DEFAULT_FILE_STORAGE="inmemorystorage.InMemoryStorage",
             MIGRATION_MODULES=DisableMigrations(),
