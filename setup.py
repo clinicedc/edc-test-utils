@@ -31,7 +31,7 @@ setup(
     zip_safe=False,
     keywords='django edc tests',
     install_requires=[
-        "model_mommy",
+        "model_bakery",
         "faker",
     ],
     classifiers=[
