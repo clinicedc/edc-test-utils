@@ -114,12 +114,12 @@ class DefaultTestSettings:
             USE_I18N=True,
             USE_L10N=True,
             USE_TZ=True,
-            COUNTRY="botswana",
             EDC_BOOTSTRAP=3,
             GIT_DIR=self.base_dir,
             LIVE_SYSTEM=False,
             REVIEWER_SITE_ID=0,
             SITE_ID=40,
+            COUNTRY="botswana",
             USE_EDC_FACILITY_DEFAULTS=True,
             HOLIDAY_FILE=os.path.join(
                 self.base_dir, self.app_name, "tests", "holidays.csv"
@@ -144,7 +144,9 @@ class DefaultTestSettings:
             DJANGO_COLLECT_OFFLINE_FILES_USB_VOLUME=None,
             DJANGO_COLLECT_OFFLINE_FILES_USER=None,
             DJANGO_COLLECT_OFFLINE_SERVER_IP=None,
-            EDC_RANDOMIZATION_LIST_PATH=self.etc_dir,
+            EDC_RANDOMIZATION_LIST_PATH=os.path.join(
+                self.base_dir, self.app_name, "tests", "etc"
+            ),
             EDC_RANDOMIZATION_REGISTER_DEFAULT_RANDOMIZER=True,
             DATA_DICTIONARY_APP_LABELS=[],
             DEFAULT_FILE_STORAGE="inmemorystorage.InMemoryStorage",
