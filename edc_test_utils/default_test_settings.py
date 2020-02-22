@@ -1,5 +1,6 @@
 import sys
 import os
+from django import VERSION
 
 
 class DisableMigrations:
@@ -10,19 +11,37 @@ class DisableMigrations:
         return None
 
 
+def get_migrations_module():
+    if VERSION <= (1, 9):
+        return {
+            'auth': None,
+            'contenttypes': None,
+            'default': None,
+            'sessions': None,
+
+            'core': None,
+            'profiles': None,
+            'snippets': None,
+            'scaffold_templates': None,
+        }
+    else:
+        return DisableMigrations()
+
+
 class DefaultTestSettings:
     def __init__(
-        self,
-        base_dir=None,
-        app_name=None,
-        calling_file=None,
-        etc_dir=None,
-        use_test_urls=None,
-        add_dashboard_middleware=None,
-        add_lab_dashboard_middleware=None,
-        template_dirs=None,
-        installed_apps=None,
-        **kwargs,
+            self,
+            base_dir=None,
+            app_name=None,
+            calling_file=None,
+            etc_dir=None,
+            use_test_urls=None,
+            add_dashboard_middleware=None,
+            add_lab_dashboard_middleware=None,
+            add_adverse_event_dashboard_middleware=None,
+            template_dirs=None,
+            installed_apps=None,
+            **kwargs,
     ):
 
         self.calling_file = os.path.basename(calling_file) if calling_file else None
@@ -60,6 +79,11 @@ class DefaultTestSettings:
             self.settings["MIDDLEWARE"].extend(
                 ["edc_lab_dashboard.middleware.DashboardMiddleware"]
             )
+        if add_adverse_event_dashboard_middleware:
+            self.settings["MIDDLEWARE"].extend(
+                ["edc_adverse_event.middleware.DashboardMiddleware"]
+            )
+
         if "django_crypto_fields.apps.AppConfig" in self.settings.get("INSTALLED_APPS"):
             self._manage_encryption_keys()
         self.check_travis()
@@ -133,6 +157,8 @@ class DefaultTestSettings:
                 "tmg": "someone@example.com",
             },
             EMAIL_ENABLED=True,
+            INDEX_PAGE="http://localhost:8000",
+            SENTRY_ENABLED=False,
             TWILIO_ENABLED=False,
             TWILIO_TEST_RECIPIENT="+15555555555",
             SUBJECT_CONSENT_MODEL=f"{self.app_name}.subjectconsent",
@@ -150,7 +176,7 @@ class DefaultTestSettings:
             EDC_RANDOMIZATION_REGISTER_DEFAULT_RANDOMIZER=True,
             DATA_DICTIONARY_APP_LABELS=[],
             DEFAULT_FILE_STORAGE="inmemorystorage.InMemoryStorage",
-            MIGRATION_MODULES=DisableMigrations(),
+            MIGRATION_MODULES=get_migrations_module(),
             PASSWORD_HASHERS=("django.contrib.auth.hashers.MD5PasswordHasher",),
         )
 
