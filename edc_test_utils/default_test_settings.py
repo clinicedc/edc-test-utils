@@ -144,7 +144,6 @@ class DefaultTestSettings:
             REVIEWER_SITE_ID=0,
             SITE_ID=40,
             COUNTRY="botswana",
-            USE_EDC_FACILITY_DEFAULTS=True,
             HOLIDAY_FILE=os.path.join(
                 self.base_dir, self.app_name, "tests", "holidays.csv"
             ),
@@ -164,12 +163,15 @@ class DefaultTestSettings:
             SUBJECT_CONSENT_MODEL=f"{self.app_name}.subjectconsent",
             SUBJECT_VISIT_MODEL=f"{self.app_name}.subjectvisit",
             SUBJECT_REQUISITION_MODEL=f"{self.app_name}.subjectrequisition",
-            ADVERSE_EVENT_ADMIN_SITE="adverse_event_app_admin",
-            ADVERSE_EVENT_APP_LABEL="adverse_event_app",
+            ADVERSE_EVENT_ADMIN_SITE="sample_ae_app_admin",
+            ADVERSE_EVENT_APP_LABEL="sample_ae_app",
+            DJANGO_COLLECT_OFFLINE_ENABLED=False,
             DJANGO_COLLECT_OFFLINE_FILES_REMOTE_HOST=None,
             DJANGO_COLLECT_OFFLINE_FILES_USB_VOLUME=None,
             DJANGO_COLLECT_OFFLINE_FILES_USER=None,
             DJANGO_COLLECT_OFFLINE_SERVER_IP=None,
+            EDC_FACILITY_USE_DEFAULTS=True,
+            EDC_FACILITY_DEFAULT_FACILITY_NAME="7-day-clinic",
             EDC_RANDOMIZATION_LIST_PATH=os.path.join(
                 self.base_dir, self.app_name, "tests", "etc"
             ),
