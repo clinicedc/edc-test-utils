@@ -2,7 +2,6 @@ import sys
 import os
 from django import VERSION
 
-
 class DisableMigrations:
     def __contains__(self, item):
         return True
@@ -163,8 +162,8 @@ class DefaultTestSettings:
             SUBJECT_CONSENT_MODEL=f"{self.app_name}.subjectconsent",
             SUBJECT_VISIT_MODEL=f"{self.app_name}.subjectvisit",
             SUBJECT_REQUISITION_MODEL=f"{self.app_name}.subjectrequisition",
-            ADVERSE_EVENT_ADMIN_SITE="sample_ae_app_admin",
-            ADVERSE_EVENT_APP_LABEL="sample_ae_app",
+            ADVERSE_EVENT_ADMIN_SITE="adverse_event_app_admin",
+            ADVERSE_EVENT_APP_LABEL="adverse_event_app",
             DJANGO_COLLECT_OFFLINE_ENABLED=False,
             DJANGO_COLLECT_OFFLINE_FILES_REMOTE_HOST=None,
             DJANGO_COLLECT_OFFLINE_FILES_USB_VOLUME=None,
