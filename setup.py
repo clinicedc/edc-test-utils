@@ -33,6 +33,7 @@ setup(
     install_requires=[
         "model_bakery",
         "faker",
+        "mysqlclient",
     ],
     classifiers=[
         'Environment :: Web Environment',
