@@ -1,6 +1,11 @@
 import sys
 import os
+
+import arrow
+from dateutil.relativedelta import relativedelta
 from django import VERSION
+from edc_utils import get_utcnow
+
 
 class DisableMigrations:
     def __contains__(self, item):
@@ -169,6 +174,8 @@ class DefaultTestSettings:
             DJANGO_COLLECT_OFFLINE_FILES_USB_VOLUME=None,
             DJANGO_COLLECT_OFFLINE_FILES_USER=None,
             DJANGO_COLLECT_OFFLINE_SERVER_IP=None,
+            EDC_PROTOCOL_STUDY_OPEN_DATETIME=arrow.utcnow().datetime - relativedelta(years=1),
+            EDC_PROTOCOL_STUDY_CLOSE_DATETIME=arrow.utcnow().datetime + relativedelta(years=1),
             EDC_FACILITY_USE_DEFAULTS=True,
             EDC_FACILITY_DEFAULT_FACILITY_NAME="7-day-clinic",
             EDC_RANDOMIZATION_LIST_PATH=os.path.join(
