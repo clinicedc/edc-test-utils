@@ -18,15 +18,14 @@ class DisableMigrations:
 def get_migrations_module():
     if VERSION <= (1, 9):
         return {
-            'auth': None,
-            'contenttypes': None,
-            'default': None,
-            'sessions': None,
-
-            'core': None,
-            'profiles': None,
-            'snippets': None,
-            'scaffold_templates': None,
+            "auth": None,
+            "contenttypes": None,
+            "default": None,
+            "sessions": None,
+            "core": None,
+            "profiles": None,
+            "snippets": None,
+            "scaffold_templates": None,
         }
     else:
         return DisableMigrations()
@@ -34,18 +33,18 @@ def get_migrations_module():
 
 class DefaultTestSettings:
     def __init__(
-            self,
-            base_dir=None,
-            app_name=None,
-            calling_file=None,
-            etc_dir=None,
-            use_test_urls=None,
-            add_dashboard_middleware=None,
-            add_lab_dashboard_middleware=None,
-            add_adverse_event_dashboard_middleware=None,
-            template_dirs=None,
-            installed_apps=None,
-            **kwargs,
+        self,
+        base_dir=None,
+        app_name=None,
+        calling_file=None,
+        etc_dir=None,
+        use_test_urls=None,
+        add_dashboard_middleware=None,
+        add_lab_dashboard_middleware=None,
+        add_adverse_event_dashboard_middleware=None,
+        template_dirs=None,
+        installed_apps=None,
+        **kwargs,
     ):
 
         self.calling_file = os.path.basename(calling_file) if calling_file else None
@@ -174,8 +173,11 @@ class DefaultTestSettings:
             DJANGO_COLLECT_OFFLINE_FILES_USB_VOLUME=None,
             DJANGO_COLLECT_OFFLINE_FILES_USER=None,
             DJANGO_COLLECT_OFFLINE_SERVER_IP=None,
-            EDC_PROTOCOL_STUDY_OPEN_DATETIME=arrow.utcnow().datetime - relativedelta(years=1),
-            EDC_PROTOCOL_STUDY_CLOSE_DATETIME=arrow.utcnow().datetime + relativedelta(years=1),
+            EDC_NAVBAR_DEFAULT=self.app_name,
+            EDC_PROTOCOL_STUDY_OPEN_DATETIME=arrow.utcnow().datetime
+            - relativedelta(years=1),
+            EDC_PROTOCOL_STUDY_CLOSE_DATETIME=arrow.utcnow().datetime
+            + relativedelta(years=1),
             EDC_FACILITY_USE_DEFAULTS=True,
             EDC_FACILITY_DEFAULT_FACILITY_NAME="7-day-clinic",
             EDC_RANDOMIZATION_LIST_PATH=os.path.join(
