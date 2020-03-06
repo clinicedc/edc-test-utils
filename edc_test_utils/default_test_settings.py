@@ -1,10 +1,9 @@
-import sys
-import os
-
 import arrow
+import os
+import sys
+
 from dateutil.relativedelta import relativedelta
 from django import VERSION
-from edc_utils import get_utcnow
 
 
 class DisableMigrations:
