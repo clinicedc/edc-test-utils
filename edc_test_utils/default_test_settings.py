@@ -162,6 +162,7 @@ class DefaultTestSettings:
             SENTRY_ENABLED=False,
             TWILIO_ENABLED=False,
             TWILIO_TEST_RECIPIENT="+15555555555",
+            SUBJECT_SCREENING_MODEL=f"{self.app_name}.subjectscreening",
             SUBJECT_CONSENT_MODEL=f"{self.app_name}.subjectconsent",
             SUBJECT_VISIT_MODEL=f"{self.app_name}.subjectvisit",
             SUBJECT_REQUISITION_MODEL=f"{self.app_name}.subjectrequisition",
