@@ -25,7 +25,7 @@ setup(
     long_description=README,
     zip_safe=False,
     keywords="django edc tests",
-    install_requires=["model_bakery", "faker", "arrow"],
+    install_requires=["model_bakery", "faker", "arrow", "django_webtest"],
     classifiers=[
         "Environment :: Web Environment",
         "Framework :: Django",
