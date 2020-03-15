@@ -50,8 +50,11 @@ class DefaultTestSettings:
         self.base_dir = base_dir or kwargs.get("BASE_DIR")
         self.app_name = app_name or kwargs.get("APP_NAME")
         self.installed_apps = installed_apps or kwargs.get("INSTALLED_APPS")
-        self.etc_dir = etc_dir or kwargs.get("ETC_DIR")
-
+        self.etc_dir = (
+            etc_dir
+            or kwargs.get("ETC_DIR")
+            or os.path.join(self.base_dir, self.app_name, "tests", "etc")
+        )
         self.settings = dict(
             APP_NAME=self.app_name,
             BASE_DIR=self.base_dir,
