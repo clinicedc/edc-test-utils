@@ -148,7 +148,6 @@ class DefaultTestSettings:
             LIVE_SYSTEM=False,
             REVIEWER_SITE_ID=0,
             SITE_ID=40,
-            COUNTRY="botswana",
             HOLIDAY_FILE=os.path.join(
                 self.base_dir, self.app_name, "tests", "holidays.csv"
             ),
