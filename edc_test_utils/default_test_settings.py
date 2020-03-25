@@ -187,6 +187,7 @@ class DefaultTestSettings:
             ),
             EDC_RANDOMIZATION_REGISTER_DEFAULT_RANDOMIZER=True,
             EDC_RANDOMIZATION_SKIP_VERIFY_CHECKS=True,
+            EDC_SITES_MODULE_NAME=None,
             DATA_DICTIONARY_APP_LABELS=[],
             DEFAULT_FILE_STORAGE="inmemorystorage.InMemoryStorage",
             MIGRATION_MODULES=get_migrations_module(),
