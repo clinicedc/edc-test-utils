@@ -4,6 +4,7 @@ import sys
 
 from dateutil.relativedelta import relativedelta
 from django import VERSION
+from multisite import SiteID
 
 
 class DisableMigrations:
@@ -147,7 +148,7 @@ class DefaultTestSettings:
             GIT_DIR=self.base_dir,
             LIVE_SYSTEM=False,
             REVIEWER_SITE_ID=0,
-            SITE_ID=40,
+            SITE_ID=SiteID(default=1),
             HOLIDAY_FILE=os.path.join(
                 self.base_dir, self.app_name, "tests", "holidays.csv"
             ),
@@ -180,6 +181,7 @@ class DefaultTestSettings:
             - relativedelta(years=1),
             EDC_PROTOCOL_STUDY_CLOSE_DATETIME=arrow.utcnow().datetime
             + relativedelta(years=1),
+            EDC_PROTOCOL_NUMBER="101",
             EDC_FACILITY_USE_DEFAULTS=True,
             EDC_FACILITY_DEFAULT_FACILITY_NAME="7-day-clinic",
             EDC_RANDOMIZATION_LIST_PATH=os.path.join(
