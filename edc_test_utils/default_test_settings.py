@@ -114,7 +114,11 @@ class DefaultTestSettings:
                 "default": {
                     "ENGINE": "django.db.backends.sqlite3",
                     "NAME": os.path.join(self.base_dir, "db.sqlite3"),
-                }
+                },
+                "client": {
+                    "ENGINE": "django.db.backends.sqlite3",
+                    "NAME": os.path.join(self.base_dir, "db.sqlite3"),
+                },
             },
             TEMPLATES=[
                 {
