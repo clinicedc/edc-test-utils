@@ -172,6 +172,7 @@ class DefaultTestSettings:
             SUBJECT_SCREENING_MODEL=f"{self.app_name}.subjectscreening",
             SUBJECT_CONSENT_MODEL=f"{self.app_name}.subjectconsent",
             SUBJECT_VISIT_MODEL=f"{self.app_name}.subjectvisit",
+            SUBJECT_VISIT_MISSED_MODEL=f"{self.app_name}.subjectvisitmissed",
             SUBJECT_REQUISITION_MODEL=f"{self.app_name}.subjectrequisition",
             ADVERSE_EVENT_ADMIN_SITE="adverse_event_app_admin",
             ADVERSE_EVENT_APP_LABEL="adverse_event_app",
