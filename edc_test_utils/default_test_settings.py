@@ -4,7 +4,11 @@ import sys
 
 from dateutil.relativedelta import relativedelta
 from django import VERSION
-from multisite import SiteID
+
+try:
+    from multisite import SiteID
+except ModuleNotFoundError:
+    SiteID = None
 
 
 class DisableMigrations:
@@ -152,7 +156,7 @@ class DefaultTestSettings:
             GIT_DIR=self.base_dir,
             LIVE_SYSTEM=False,
             REVIEWER_SITE_ID=0,
-            SITE_ID=SiteID(default=1),
+            SITE_ID=SiteID(default=1) if SiteID else 1,
             HOLIDAY_FILE=os.path.join(
                 self.base_dir, self.app_name, "tests", "holidays.csv"
             ),
