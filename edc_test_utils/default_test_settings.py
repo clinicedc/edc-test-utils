@@ -2,8 +2,10 @@ import arrow
 import os
 import sys
 
+
 from dateutil.relativedelta import relativedelta
 from django import VERSION
+from uuid import uuid4
 
 try:
     from multisite import SiteID
@@ -157,6 +159,7 @@ class DefaultTestSettings:
             LIVE_SYSTEM=False,
             REVIEWER_SITE_ID=0,
             SITE_ID=SiteID(default=1) if SiteID else 1,
+            SECRET_KEY=uuid4().hex,
             HOLIDAY_FILE=os.path.join(
                 self.base_dir, self.app_name, "tests", "holidays.csv"
             ),
