@@ -196,6 +196,7 @@ class DefaultTestSettings:
             EDC_PROTOCOL_NUMBER="101",
             EDC_FACILITY_USE_DEFAULTS=True,
             EDC_FACILITY_DEFAULT_FACILITY_NAME="7-day-clinic",
+            LIST_MODEL_APP_LABEL=self.app_name,
             EDC_RANDOMIZATION_LIST_PATH=os.path.join(
                 self.base_dir, self.app_name, "tests", "etc"
             ),
