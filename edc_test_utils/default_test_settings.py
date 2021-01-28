@@ -1,11 +1,12 @@
-import arrow
 import os
 import sys
+from uuid import uuid4
 
-
+import arrow
 from dateutil.relativedelta import relativedelta
 from django import VERSION
-from uuid import uuid4
+
+from .constants import DEFAULT_EDC_INSTALLED_APPS
 
 try:
     from multisite import SiteID
@@ -49,14 +50,13 @@ class DefaultTestSettings:
         add_lab_dashboard_middleware=None,
         add_adverse_event_dashboard_middleware=None,
         template_dirs=None,
-        installed_apps=None,
         **kwargs,
     ):
 
         self.calling_file = os.path.basename(calling_file) if calling_file else None
         self.base_dir = base_dir or kwargs.get("BASE_DIR")
         self.app_name = app_name or kwargs.get("APP_NAME")
-        self.installed_apps = installed_apps or kwargs.get("INSTALLED_APPS")
+        self.installed_apps = kwargs.get("INSTALLED_APPS") or DEFAULT_EDC_INSTALLED_APPS
         self.etc_dir = (
             etc_dir
             or kwargs.get("ETC_DIR")
@@ -65,7 +65,7 @@ class DefaultTestSettings:
         self.settings = dict(
             APP_NAME=self.app_name,
             BASE_DIR=self.base_dir,
-            INSTALLED_APPS=self.installed_apps or [],
+            INSTALLED_APPS=self.installed_apps,
             ETC_DIR=self.etc_dir,
             TEST_DIR=os.path.join(self.base_dir, self.app_name, "tests"),
         )
@@ -108,8 +108,7 @@ class DefaultTestSettings:
                 self.settings.update(ROOT_URLCONF=f"{self.app_name}.urls")
 
     def _update_defaults(self):
-        """Assumes BASE_DIR, APP_NAME, INSTALLED_APPS are in kwargs.
-        """
+        """Assumes BASE_DIR, APP_NAME are in kwargs."""
 
         self.settings.update(
             ALLOWED_HOSTS=["localhost"],
