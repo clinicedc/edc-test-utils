@@ -1,2 +1,3 @@
 from .default_test_settings import DefaultTestSettings  # noqa
-from .show_urls import show_urls, show_url_names  # noqa
+from .func_main import func_main
+from .show_urls import show_url_names, show_urls  # noqa

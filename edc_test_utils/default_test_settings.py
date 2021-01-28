@@ -50,13 +50,18 @@ class DefaultTestSettings:
         add_lab_dashboard_middleware=None,
         add_adverse_event_dashboard_middleware=None,
         template_dirs=None,
+        excluded_apps=None,
         **kwargs,
     ):
 
         self.calling_file = os.path.basename(calling_file) if calling_file else None
         self.base_dir = base_dir or kwargs.get("BASE_DIR")
         self.app_name = app_name or kwargs.get("APP_NAME")
-        self.installed_apps = kwargs.get("INSTALLED_APPS") or DEFAULT_EDC_INSTALLED_APPS
+        self.installed_apps = [
+            app
+            for app in (kwargs.get("INSTALLED_APPS") or DEFAULT_EDC_INSTALLED_APPS)
+            if app not in (excluded_apps or [])
+        ]
         self.etc_dir = (
             etc_dir
             or kwargs.get("ETC_DIR")
@@ -66,7 +71,10 @@ class DefaultTestSettings:
             APP_NAME=self.app_name,
             BASE_DIR=self.base_dir,
             INSTALLED_APPS=self.installed_apps,
-            ETC_DIR=self.etc_dir,
+            ETC_DIR=(
+                self.etc_dir
+                or os.path.join(self.base_dir, self.app_name, "tests", "etc")
+            ),
             TEST_DIR=os.path.join(self.base_dir, self.app_name, "tests"),
         )
 
@@ -96,7 +104,7 @@ class DefaultTestSettings:
                 ["edc_adverse_event.middleware.DashboardMiddleware"]
             )
 
-        if "django_crypto_fields.apps.AppConfig" in self.settings.get("INSTALLED_APPS"):
+        if "django_crypto_fields.apps.AppConfig" in self.installed_apps:
             self._manage_encryption_keys()
         self.check_travis()
 

@@ -57,4 +57,5 @@ DEFAULT_EDC_INSTALLED_APPS = [
     "edc_timepoint.apps.AppConfig",
     "edc_visit_tracking.apps.AppConfig",
     "edc_form_describer.apps.AppConfig",
+    "adverse_event_app.apps.AppConfig",
 ]
