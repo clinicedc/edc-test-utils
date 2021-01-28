@@ -6,7 +6,7 @@ import arrow
 from dateutil.relativedelta import relativedelta
 from django import VERSION
 
-from .constants import DEFAULT_EDC_INSTALLED_APPS
+from .default_installed_apps import DEFAULT_EDC_INSTALLED_APPS
 
 try:
     from multisite import SiteID
