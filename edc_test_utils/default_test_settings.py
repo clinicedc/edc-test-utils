@@ -72,8 +72,7 @@ class DefaultTestSettings:
             BASE_DIR=self.base_dir,
             INSTALLED_APPS=self.installed_apps,
             ETC_DIR=(
-                self.etc_dir
-                or os.path.join(self.base_dir, self.app_name, "tests", "etc")
+                self.etc_dir or os.path.join(self.base_dir, self.app_name, "tests", "etc")
             ),
             TEST_DIR=os.path.join(self.base_dir, self.app_name, "tests"),
         )
@@ -167,9 +166,7 @@ class DefaultTestSettings:
             REVIEWER_SITE_ID=0,
             SITE_ID=SiteID(default=1) if SiteID else 1,
             SECRET_KEY=uuid4().hex,
-            HOLIDAY_FILE=os.path.join(
-                self.base_dir, self.app_name, "tests", "holidays.csv"
-            ),
+            HOLIDAY_FILE=os.path.join(self.base_dir, self.app_name, "tests", "holidays.csv"),
             DASHBOARD_URL_NAMES={},
             DASHBOARD_BASE_TEMPLATES={},
             EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend",
@@ -196,14 +193,12 @@ class DefaultTestSettings:
             DJANGO_COLLECT_OFFLINE_FILES_USER=None,
             DJANGO_COLLECT_OFFLINE_SERVER_IP=None,
             EDC_NAVBAR_DEFAULT=self.app_name,
-            EDC_PROTOCOL_STUDY_OPEN_DATETIME=arrow.utcnow().datetime
-            - relativedelta(years=1),
-            EDC_PROTOCOL_STUDY_CLOSE_DATETIME=arrow.utcnow().datetime
-            + relativedelta(years=1),
+            EDC_PROTOCOL_STUDY_OPEN_DATETIME=arrow.utcnow().datetime - relativedelta(years=1),
+            EDC_PROTOCOL_STUDY_CLOSE_DATETIME=arrow.utcnow().datetime + relativedelta(years=1),
             EDC_PROTOCOL_NUMBER="101",
             EDC_FACILITY_USE_DEFAULTS=True,
             EDC_FACILITY_DEFAULT_FACILITY_NAME="7-day-clinic",
-            LIST_MODEL_APP_LABEL=self.app_name,
+            LIST_MODEL_APP_LABEL=self.app_name.replace("edc", "lists"),
             EDC_RANDOMIZATION_LIST_PATH=os.path.join(
                 self.base_dir, self.app_name, "tests", "etc"
             ),
