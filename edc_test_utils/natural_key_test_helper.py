@@ -1,6 +1,7 @@
+from unittest.case import TestCase
+
 from django.apps import apps as django_apps
 from edc_list_data.model_mixins import ListModelMixin
-from unittest.case import TestCase
 
 
 class NaturalKeyTestHelperError(Exception):
