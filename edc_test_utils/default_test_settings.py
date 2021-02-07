@@ -167,6 +167,7 @@ class DefaultTestSettings:
             SITE_ID=SiteID(default=1) if SiteID else 1,
             SECRET_KEY=uuid4().hex,
             HOLIDAY_FILE=os.path.join(self.base_dir, self.app_name, "tests", "holidays.csv"),
+            INDEX_PAGE_LABEL="",
             DASHBOARD_URL_NAMES={},
             DASHBOARD_BASE_TEMPLATES={},
             EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend",
