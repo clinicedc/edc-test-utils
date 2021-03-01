@@ -181,11 +181,18 @@ class DefaultTestSettings:
             SENTRY_ENABLED=False,
             TWILIO_ENABLED=False,
             TWILIO_TEST_RECIPIENT="+15555555555",
-            SUBJECT_SCREENING_MODEL=f"{self.app_name}.subjectscreening",
-            SUBJECT_CONSENT_MODEL=f"{self.app_name}.subjectconsent",
-            SUBJECT_VISIT_MODEL=f"{self.app_name}.subjectvisit",
-            SUBJECT_VISIT_MISSED_MODEL=f"{self.app_name}.subjectvisitmissed",
-            SUBJECT_REQUISITION_MODEL=f"{self.app_name}.subjectrequisition",
+            SUBJECT_SCREENING_MODEL=(
+                f"{self.app_name.replace('edc', 'screening')}.subjectscreening"
+            ),
+            SUBJECT_CONSENT_MODEL=f"{self.app_name.replace('edc', 'consent')}.subjectconsent",
+            SUBJECT_VISIT_MODEL=f"{self.app_name.replace('edc', 'subject')}.subjectvisit",
+            SUBJECT_VISIT_MISSED_MODEL=(
+                f"{self.app_name.replace('edc', 'subject')}.subjectvisitmissed"
+            ),
+            SUBJECT_REQUISITION_MODEL=(
+                f"{self.app_name.replace('edc', 'subject')}.subjectrequisition"
+            ),
+            SUBJECT_APP_LABEL=f"{self.app_name.replace('edc', 'subject')}",
             ADVERSE_EVENT_ADMIN_SITE="adverse_event_app_admin",
             ADVERSE_EVENT_APP_LABEL="adverse_event_app",
             DJANGO_COLLECT_OFFLINE_ENABLED=False,
