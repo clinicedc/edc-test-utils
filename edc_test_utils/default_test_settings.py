@@ -67,14 +67,16 @@ class DefaultTestSettings:
             or kwargs.get("ETC_DIR")
             or os.path.join(self.base_dir, self.app_name, "tests", "etc")
         )
+        self.test_dir = kwargs.get("TEST_DIR") or os.path.join(
+            self.base_dir, self.app_name, "tests"
+        )
+
         self.settings = dict(
             APP_NAME=self.app_name,
             BASE_DIR=self.base_dir,
             INSTALLED_APPS=self.installed_apps,
-            ETC_DIR=(
-                self.etc_dir or os.path.join(self.base_dir, self.app_name, "tests", "etc")
-            ),
-            TEST_DIR=os.path.join(self.base_dir, self.app_name, "tests"),
+            ETC_DIR=self.etc_dir,
+            TEST_DIR=self.test_dir,
         )
 
         self._update_defaults()
