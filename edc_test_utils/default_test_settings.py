@@ -1,4 +1,5 @@
 import os
+import pdb
 import sys
 from uuid import uuid4
 
@@ -118,7 +119,6 @@ class DefaultTestSettings:
 
     def _update_defaults(self):
         """Assumes BASE_DIR, APP_NAME are in kwargs."""
-
         self.settings.update(
             ALLOWED_HOSTS=["localhost"],
             # AUTH_USER_MODEL='custom_user.CustomUser',
@@ -162,11 +162,13 @@ class DefaultTestSettings:
             USE_I18N=True,
             USE_L10N=True,
             USE_TZ=True,
+            DEFAULT_AUTO_FIELD="django.db.models.BigAutoField",
             EDC_BOOTSTRAP=3,
             GIT_DIR=self.base_dir,
             LIVE_SYSTEM=False,
             REVIEWER_SITE_ID=0,
             SITE_ID=SiteID(default=1) if SiteID else 1,
+            SILENCED_SYSTEM_CHECKS=["sites.E101"],  # The SITE_ID setting must be an integer
             SECRET_KEY=uuid4().hex,
             HOLIDAY_FILE=os.path.join(self.base_dir, self.app_name, "tests", "holidays.csv"),
             INDEX_PAGE_LABEL="",
