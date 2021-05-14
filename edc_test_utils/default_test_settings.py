@@ -1,5 +1,4 @@
 import os
-import pdb
 import sys
 from uuid import uuid4
 
@@ -199,6 +198,7 @@ class DefaultTestSettings:
             DJANGO_COLLECT_OFFLINE_FILES_USER=None,
             DJANGO_COLLECT_OFFLINE_SERVER_IP=None,
             EDC_NAVBAR_DEFAULT=self.app_name,
+            EDC_PROTOCOL_PROJECT_NAME="EDC TEST PROJECT",
             EDC_PROTOCOL_STUDY_OPEN_DATETIME=arrow.utcnow().datetime - relativedelta(years=1),
             EDC_PROTOCOL_STUDY_CLOSE_DATETIME=arrow.utcnow().datetime + relativedelta(years=1),
             EDC_PROTOCOL_NUMBER="101",
