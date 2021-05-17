@@ -123,19 +123,17 @@ class DefaultTestSettings:
             ALLOWED_HOSTS=["localhost"],
             # AUTH_USER_MODEL='custom_user.CustomUser',
             STATIC_URL="/static/",
-            DATABASES=(
-                {
-                    # required for tests when acting as a server that deserializes
-                    "default": {
-                        "ENGINE": "django.db.backends.sqlite3",
-                        "NAME": os.path.join(self.base_dir, "db.sqlite3"),
-                    },
-                    "client": {
-                        "ENGINE": "django.db.backends.sqlite3",
-                        "NAME": os.path.join(self.base_dir, "db.sqlite3"),
-                    },
+            DATABASES={
+                # required for tests when acting as a server that deserializes
+                "default": {
+                    "ENGINE": "django.db.backends.sqlite3",
+                    "NAME": os.path.join(self.base_dir, "db.sqlite3"),
                 },
-            ),
+                "client": {
+                    "ENGINE": "django.db.backends.sqlite3",
+                    "NAME": os.path.join(self.base_dir, "db.sqlite3"),
+                },
+            },
             TEMPLATES=[
                 {
                     "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -232,7 +230,7 @@ class DefaultTestSettings:
             )
 
     def check_github_actions(self):
-        if os.getenv("GITHUB_ACTIONS"):
+        if os.environ.get("GITHUB_ACTIONS"):
             self.settings.update(
                 DATABASES={
                     "default": {
@@ -251,7 +249,7 @@ class DefaultTestSettings:
                         "HOST": "127.0.0.1",
                         "PORT": 3306,
                     },
-                }
+                },
             )
 
     def check_travis(self):
