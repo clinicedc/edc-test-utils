@@ -232,7 +232,7 @@ class DefaultTestSettings:
             )
 
     def check_github_actions(self):
-        if os.getenv("GITHUB_WORKFLOW"):
+        if os.getenv("GITHUB_ACTIONS"):
             self.settings.update(
                 DATABASES={
                     "default": {
