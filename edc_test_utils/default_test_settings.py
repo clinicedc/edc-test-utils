@@ -108,6 +108,7 @@ class DefaultTestSettings:
         if "django_crypto_fields.apps.AppConfig" in self.installed_apps:
             self._manage_encryption_keys()
         self.check_travis()
+        self.check_github_actions()
 
     def update_root_urlconf(self, use_test_urls=None):
         if "ROOT_URLCONF" not in self.settings:
@@ -228,6 +229,29 @@ class DefaultTestSettings:
                 DEBUG=False, KEY_PATH=key_path, AUTO_CREATE_KEYS=auto_create_keys
             )
 
+    def check_github_actions(self):
+        if os.environ.get("GITHUB_ACTIONS"):
+            self.settings.update(
+                DATABASES={
+                    "default": {
+                        "ENGINE": "django.db.backends.mysql",
+                        "NAME": "test",
+                        "USER": "root",
+                        "PASSWORD": "mysql",
+                        "HOST": "127.0.0.1",
+                        "PORT": 3306,
+                    },
+                    "client": {
+                        "ENGINE": "django.db.backends.mysql",
+                        "NAME": "other",
+                        "USER": "root",
+                        "PASSWORD": "mysql",
+                        "HOST": "127.0.0.1",
+                        "PORT": 3306,
+                    },
+                },
+            )
+
     def check_travis(self):
         if os.environ.get("TRAVIS"):
             self.settings.update(
@@ -239,6 +263,6 @@ class DefaultTestSettings:
                         "PASSWORD": "",
                         "HOST": "localhost",
                         "PORT": "",
-                    }
+                    },
                 }
             )
