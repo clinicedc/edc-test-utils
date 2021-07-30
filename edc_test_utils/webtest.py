@@ -14,14 +14,15 @@ def get_or_create_group(group_name):
 
 def login(testcase, user=None, superuser=None, groups=None, redirect_url=None):
     user = testcase.user if user is None else user
-    superuser = True if superuser is None else superuser
-    if not superuser:
-        user.is_superuser = False
-        user.is_active = True
-        user.save()
+    user.is_superuser = True if superuser is None else superuser
+    user.is_active = True
+    user.is_staff = True
+    if not user.is_superuser:
         for group_name in groups:
             group = get_or_create_group(group_name)
             user.groups.add(group)
+    user.save()
+    user.refresh_from_db()
     form = (
         testcase.app.get(reverse(redirect_url or settings.LOGIN_REDIRECT_URL))
         .maybe_follow()
