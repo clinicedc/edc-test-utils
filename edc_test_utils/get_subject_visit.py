@@ -1,11 +1,9 @@
-import abc
-import pdb
-
 from dateutil.relativedelta import relativedelta
 from django.apps import apps as django_apps
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core.exceptions import ObjectDoesNotExist
+from edc_appointment.models import Appointment
 from edc_utils import get_utcnow
 from edc_visit_schedule.constants import DAY1
 from edc_visit_tracking.constants import SCHEDULED, UNSCHEDULED
@@ -59,12 +57,11 @@ class SubjectVisitTestCaseMixin:
             initials=subject_screening.initials,
         )
         options.update(**kwargs)
-        pdb.set_trace()
         return self.subject_consent_model_cls.objects.create(**options)
 
-    @abc.abstractmethod
-    def get_appointment(self, *args, **kwargs):
-        pass
+    @staticmethod
+    def get_appointment(**kwargs):
+        return Appointment.objects.get(**kwargs)
 
     def get_subject_visit(
         self,
@@ -79,7 +76,6 @@ class SubjectVisitTestCaseMixin:
     ):
         reason = reason or SCHEDULED
         if not appointment:
-            pdb.set_trace()
             subject_consent = subject_consent or self.get_subject_consent(
                 subject_screening or self.get_subject_screening()
             )
