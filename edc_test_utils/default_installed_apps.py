@@ -45,6 +45,7 @@ DEFAULT_EDC_INSTALLED_APPS = [
     "edc_pharmacy.apps.AppConfig",
     "edc_pdutils.apps.AppConfig",
     "edc_protocol.apps.AppConfig",
+    "edc_protocol_violation.apps.AppConfig",
     "edc_prn.apps.AppConfig",
     "edc_randomization.apps.AppConfig",
     "edc_registration.apps.AppConfig",
