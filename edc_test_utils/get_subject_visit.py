@@ -1,5 +1,3 @@
-import pdb
-
 from dateutil.relativedelta import relativedelta
 from django.apps import apps as django_apps
 from django.conf import settings
@@ -42,7 +40,6 @@ class SubjectVisitTestCaseMixin:
             )
         except LookupError:
             subject_screening = None
-        pdb.set_trace()
         return subject_screening
 
     def get_subject_consent(self, subject_screening, consent_datetime=None, **kwargs):

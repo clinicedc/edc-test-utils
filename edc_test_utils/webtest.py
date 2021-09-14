@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib.auth.models import Group
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls.base import reverse
+from edc_auth.models import Role
 
 
 def get_or_create_group(group_name):
@@ -12,15 +13,18 @@ def get_or_create_group(group_name):
     return group
 
 
-def login(testcase, user=None, superuser=None, groups=None, redirect_url=None):
+def login(testcase, user=None, superuser=None, groups=None, roles=None, redirect_url=None):
     user = testcase.user if user is None else user
     user.is_superuser = True if superuser is None else superuser
     user.is_active = True
     user.is_staff = True
     if not user.is_superuser:
-        for group_name in groups:
+        for group_name in groups or []:
             group = get_or_create_group(group_name)
             user.groups.add(group)
+        for role_name in roles or []:
+            role = Role.objects.get(name=role_name)
+            user.userprofile.roles.add(role)
     user.save()
     user.refresh_from_db()
     form = (
