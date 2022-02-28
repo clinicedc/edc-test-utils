@@ -122,7 +122,6 @@ class DefaultTestSettings:
         """Assumes BASE_DIR, APP_NAME are in kwargs."""
         self.settings.update(
             ALLOWED_HOSTS=["localhost"],
-            # AUTH_USER_MODEL='custom_user.CustomUser',
             STATIC_URL="/static/",
             DATABASES={
                 # required for tests when acting as a server that deserializes
