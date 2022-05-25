@@ -2,9 +2,9 @@ import os
 import sys
 from uuid import uuid4
 
-import arrow
 from dateutil.relativedelta import relativedelta
 from django import VERSION
+from edc_utils import get_utcnow
 
 from .default_installed_apps import DEFAULT_EDC_INSTALLED_APPS
 
@@ -200,8 +200,8 @@ class DefaultTestSettings:
             DJANGO_COLLECT_OFFLINE_SERVER_IP=None,
             EDC_NAVBAR_DEFAULT=self.app_name,
             EDC_PROTOCOL_PROJECT_NAME="EDC TEST PROJECT",
-            EDC_PROTOCOL_STUDY_OPEN_DATETIME=arrow.utcnow().datetime - relativedelta(years=1),
-            EDC_PROTOCOL_STUDY_CLOSE_DATETIME=arrow.utcnow().datetime + relativedelta(years=1),
+            EDC_PROTOCOL_STUDY_OPEN_DATETIME=get_utcnow() - relativedelta(years=1),
+            EDC_PROTOCOL_STUDY_CLOSE_DATETIME=get_utcnow() + relativedelta(years=1),
             EDC_PROTOCOL_NUMBER="101",
             EDC_FACILITY_USE_DEFAULTS=True,
             EDC_FACILITY_DEFAULT_FACILITY_NAME="7-day-clinic",
