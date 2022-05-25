@@ -1,4 +1,3 @@
 include AUTHORS.rst CHANGES.rst LICENSE VERSION
 include MANIFEST.in
 include *.rst
-include *.txt
