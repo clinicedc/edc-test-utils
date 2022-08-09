@@ -1,4 +1,5 @@
 import string
+from datetime import date, datetime
 from random import choice
 
 from dateutil.relativedelta import relativedelta
@@ -15,61 +16,63 @@ class EdcBaseProvider(BaseProvider):
         return django_apps.get_app_config("edc_base_test").consent_model
 
     @staticmethod
-    def gender():
-        return choice([FEMALE, MALE])
+    def gender() -> str:
+        return choice([FEMALE, MALE])  # nosec B311
 
     @staticmethod
-    def initials():
-        return choice(list(string.ascii_uppercase)) + choice(list(string.ascii_uppercase))
+    def initials() -> str:
+        return choice(list(string.ascii_uppercase)) + choice(  # nosec B311
+            list(string.ascii_uppercase)
+        )
 
-    def dob_for_consenting_adult(self):
+    def dob_for_consenting_adult(self) -> date:
         consent = site_consents.get_consent(
             consent_model=self.consent_model, report_datetime=get_utcnow()
         )
-        years = choice(range(consent.age_is_adult, consent.age_max + 1))
+        years = choice(range(consent.age_is_adult, consent.age_max + 1))  # nosec B311
         return (get_utcnow() - relativedelta(years=years)).date()
 
-    def dob_for_consenting_minor(self):
+    def dob_for_consenting_minor(self) -> date:
         consent = site_consents.get_consent(self.consent_model, report_datetime=get_utcnow())
         years = consent.age_min - 1
         return (get_utcnow() - relativedelta(years=years)).date()
 
-    def age_for_consenting_adult(self):
+    def age_for_consenting_adult(self) -> int:
         consent = site_consents.get_consent(
             consent_model=self.consent_model, report_datetime=get_utcnow()
         )
-        return choice(range(consent.age_is_adult, consent.age_max + 1))
+        return choice(range(consent.age_is_adult, consent.age_max + 1))  # nosec B311
 
-    def age_for_consenting_minor(self):
+    def age_for_consenting_minor(self) -> int:
         consent = site_consents.get_consent(
             consent_model=self.consent_model, report_datetime=get_utcnow()
         )
-        return choice(range(consent.age_min, consent.age_is_adult + 1))
+        return choice(range(consent.age_min, consent.age_is_adult + 1))  # nosec B311
 
     @staticmethod
-    def yesterday():
+    def yesterday() -> datetime:
         return get_utcnow() - relativedelta(days=1)
 
     @staticmethod
-    def last_week():
+    def last_week() -> datetime:
         return get_utcnow() - relativedelta(weeks=1)
 
     @staticmethod
-    def last_month():
+    def last_month() -> datetime:
         return get_utcnow() - relativedelta(months=1)
 
     @staticmethod
-    def two_months_ago():
+    def two_months_ago() -> datetime:
         return get_utcnow() - relativedelta(months=2)
 
     @staticmethod
-    def three_months_ago():
+    def three_months_ago() -> datetime:
         return get_utcnow() - relativedelta(months=3)
 
     @staticmethod
-    def six_months_ago():
+    def six_months_ago() -> datetime:
         return get_utcnow() - relativedelta(months=6)
 
     @staticmethod
-    def twelve_months_ago():
+    def twelve_months_ago() -> datetime:
         return get_utcnow() - relativedelta(months=12)
