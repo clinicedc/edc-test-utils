@@ -20,7 +20,13 @@ def get_or_create_group(group_name):
 
 
 def login(
-    testcase, user=None, superuser=None, groups=None, roles=None, sites=None, redirect_url=None
+    testcase,
+    user=None,
+    superuser=None,
+    groups=None,
+    roles=None,
+    sites=None,
+    redirect_url=None,
 ):
     user = testcase.user if user is None else user
     user.is_superuser = True if superuser is None else superuser
@@ -54,5 +60,5 @@ def login(
         .form
     )
     form["username"] = user.username
-    form["password"] = "pass"
+    form["password"] = "pass"  # nosec B105
     return form.submit()
