@@ -201,8 +201,14 @@ class DefaultTestSettings:
             DJANGO_COLLECT_OFFLINE_SERVER_IP=None,
             EDC_NAVBAR_DEFAULT=self.app_name,
             EDC_PROTOCOL_PROJECT_NAME="EDC TEST PROJECT",
-            EDC_PROTOCOL_STUDY_OPEN_DATETIME=get_utcnow() - relativedelta(years=1),
-            EDC_PROTOCOL_STUDY_CLOSE_DATETIME=get_utcnow() + relativedelta(years=1),
+            EDC_PROTOCOL_STUDY_OPEN_DATETIME=(
+                get_utcnow().replace(microsecond=0, second=0, minute=0, hour=0)
+                - relativedelta(years=1)
+            ),
+            EDC_PROTOCOL_STUDY_CLOSE_DATETIME=(
+                get_utcnow().replace(microsecond=999999, second=59, minute=59, hour=11)
+                + relativedelta(years=1)
+            ),
             EDC_PROTOCOL_NUMBER="101",
             EDC_FACILITY_USE_DEFAULTS=True,
             EDC_FACILITY_DEFAULT_FACILITY_NAME="7-day-clinic",
