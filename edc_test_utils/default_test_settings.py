@@ -120,6 +120,13 @@ class DefaultTestSettings:
 
     def _update_defaults(self):
         """Assumes BASE_DIR, APP_NAME are in kwargs."""
+        context_processors = [
+            "django.contrib.auth.context_processors.auth",
+            "django.contrib.messages.context_processors.messages",
+            "django.template.context_processors.request",
+        ]
+        if [a for a in self.installed_apps if a.startswith("edc_model_admin")]:
+            context_processors.append("edc_model_admin.context_processors.admin_theme")
         self.settings.update(
             ALLOWED_HOSTS=["localhost"],
             STATIC_URL="/static/",
@@ -138,14 +145,7 @@ class DefaultTestSettings:
                 {
                     "BACKEND": "django.template.backends.django.DjangoTemplates",
                     "APP_DIRS": True,
-                    "OPTIONS": {
-                        "context_processors": [
-                            "django.contrib.auth.context_processors.auth",
-                            "django.contrib.messages.context_processors.messages",
-                            "django.template.context_processors.request",
-                            "edc_model_admin.context_processors.admin_theme",
-                        ]
-                    },
+                    "OPTIONS": {"context_processors": context_processors},
                 }
             ],
             MIDDLEWARE=[
