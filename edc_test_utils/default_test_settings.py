@@ -1,5 +1,6 @@
 import os
 import sys
+from typing import List
 from uuid import uuid4
 
 from dateutil.relativedelta import relativedelta
@@ -94,6 +95,8 @@ class DefaultTestSettings:
                 [
                     "edc_dashboard.middleware.DashboardMiddleware",
                     "edc_subject_dashboard.middleware.DashboardMiddleware",
+                    "edc_listboard.middleware.DashboardMiddleware",
+                    "edc_review_dashboard.middleware.DashboardMiddleware",
                 ]
             )
 
@@ -118,15 +121,33 @@ class DefaultTestSettings:
             else:
                 self.settings.update(ROOT_URLCONF=f"{self.app_name}.urls")
 
-    def _update_defaults(self):
-        """Assumes BASE_DIR, APP_NAME are in kwargs."""
-        context_processors = [
+    @property
+    def default_context_processors(self) -> List[str]:
+        return [
             "django.contrib.auth.context_processors.auth",
             "django.contrib.messages.context_processors.messages",
             "django.template.context_processors.request",
         ]
+
+    @property
+    def edc_context_processors(self) -> List[str]:
+        context_processors = []
         if [a for a in self.installed_apps if a.startswith("edc_model_admin")]:
             context_processors.append("edc_model_admin.context_processors.admin_theme")
+        if [a for a in self.installed_apps if a.startswith("edc_constants")]:
+            context_processors.append("edc_constants.context_processors.constants")
+        if [a for a in self.installed_apps if a.startswith("edc_appointment")]:
+            context_processors.append("edc_appointment.context_processors.constants")
+        if [a for a in self.installed_apps if a.startswith("edc_visit_tracking")]:
+            context_processors.append("edc_visit_tracking.context_processors.constants")
+        return context_processors
+
+    def _update_defaults(self):
+        """Assumes BASE_DIR, APP_NAME are in kwargs."""
+
+        context_processors = self.default_context_processors
+        context_processors.extend(self.edc_context_processors)
+
         self.settings.update(
             ALLOWED_HOSTS=["localhost"],
             STATIC_URL="/static/",
