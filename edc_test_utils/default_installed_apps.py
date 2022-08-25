@@ -7,8 +7,6 @@ DEFAULT_EDC_INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.sites",
     "django.contrib.staticfiles",
-    # "django_celery_beat",
-    # "django_celery_results",
     "django_crypto_fields.apps.AppConfig",
     "django_extensions",
     "django_revision.apps.AppConfig",
