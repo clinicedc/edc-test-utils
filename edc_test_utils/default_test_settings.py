@@ -5,7 +5,9 @@ from uuid import uuid4
 
 from dateutil.relativedelta import relativedelta
 from django import VERSION
+from django.db.backends.signals import connection_created
 from edc_utils import get_utcnow
+from edc_utils.sqlite import activate_foreign_keys
 
 from .default_installed_apps import DEFAULT_EDC_INSTALLED_APPS
 
@@ -55,6 +57,7 @@ class DefaultTestSettings:
         **kwargs,
     ):
 
+        connection_created.connect(activate_foreign_keys)
         self.calling_file = os.path.basename(calling_file) if calling_file else None
         self.base_dir = base_dir or kwargs.get("BASE_DIR")
         self.app_name = app_name or kwargs.get("APP_NAME")
