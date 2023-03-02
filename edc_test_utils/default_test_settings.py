@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import os
 import sys
 from typing import List
@@ -54,13 +56,14 @@ class DefaultTestSettings:
         add_adverse_event_dashboard_middleware=None,
         template_dirs=None,
         excluded_apps=None,
+        selected_database: str = None,
         **kwargs,
     ):
-
         connection_created.connect(activate_foreign_keys)
         self.calling_file = os.path.basename(calling_file) if calling_file else None
         self.base_dir = base_dir or kwargs.get("BASE_DIR")
         self.app_name = app_name or kwargs.get("APP_NAME")
+        self.selected_database = selected_database or "sqlite"
         self.installed_apps = [
             app
             for app in (kwargs.get("INSTALLED_APPS") or DEFAULT_EDC_INSTALLED_APPS)
@@ -151,21 +154,16 @@ class DefaultTestSettings:
 
         context_processors = self.default_context_processors
         context_processors.extend(self.edc_context_processors)
-
+        if not self.selected_database or self.selected_database == "sqlite":
+            databases = self.sqlite_databases_setting()
+        elif self.selected_database == "mysql":
+            databases = self.mysql_databases_setting()
+        elif self.selected_database == "mysql_with_client":
+            databases = self.mysql_databases_setting(client=True)
         self.settings.update(
             ALLOWED_HOSTS=["localhost"],
             STATIC_URL="/static/",
-            DATABASES={
-                # required for tests when acting as a server that deserializes
-                "default": {
-                    "ENGINE": "django.db.backends.sqlite3",
-                    "NAME": os.path.join(self.base_dir, "db.sqlite3"),
-                },
-                "client": {
-                    "ENGINE": "django.db.backends.sqlite3",
-                    "NAME": os.path.join(self.base_dir, "db.sqlite3"),
-                },
-            },
+            DATABASES=databases,
             TEMPLATES=[
                 {
                     "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -264,16 +262,27 @@ class DefaultTestSettings:
 
     def check_github_actions(self):
         if os.environ.get("GITHUB_ACTIONS"):
-            self.settings.update(
-                DATABASES={
-                    "default": {
-                        "ENGINE": "django.db.backends.mysql",
-                        "NAME": "test",
-                        "USER": "root",
-                        "PASSWORD": "mysql",
-                        "HOST": "127.0.0.1",
-                        "PORT": 3306,
-                    },
+            self.settings.update(DATABASES=self.mysql_databases_setting(client=True))
+
+    def check_travis(self):
+        if os.environ.get("TRAVIS"):
+            self.settings.update(DATABASES=self.mysql_databases_setting())
+
+    @staticmethod
+    def mysql_databases_setting(client: bool | None = None) -> dict:
+        databases = {
+            "default": {
+                "ENGINE": "django.db.backends.mysql",
+                "NAME": "test",
+                "USER": "root",
+                "PASSWORD": "mysql",
+                "HOST": "127.0.0.1",
+                "PORT": 3306,
+            }
+        }
+        if client:
+            databases.update(
+                {
                     "client": {
                         "ENGINE": "django.db.backends.mysql",
                         "NAME": "other",
@@ -281,21 +290,21 @@ class DefaultTestSettings:
                         "PASSWORD": "mysql",
                         "HOST": "127.0.0.1",
                         "PORT": 3306,
-                    },
-                },
-            )
-
-    def check_travis(self):
-        if os.environ.get("TRAVIS"):
-            self.settings.update(
-                DATABASES={
-                    "default": {
-                        "ENGINE": "django.db.backends.mysql",
-                        "NAME": "edc",
-                        "USER": "travis",
-                        "PASSWORD": "",
-                        "HOST": "localhost",
-                        "PORT": "",
-                    },
+                    }
                 }
             )
+
+        return databases
+
+    def sqlite_databases_setting(self):
+        return {
+            # required for tests when acting as a server that deserializes
+            "default": {
+                "ENGINE": "django.db.backends.sqlite3",
+                "NAME": os.path.join(self.base_dir, "db.sqlite3"),
+            },
+            "client": {
+                "ENGINE": "django.db.backends.sqlite3",
+                "NAME": os.path.join(self.base_dir, "db.sqlite3"),
+            },
+        }
