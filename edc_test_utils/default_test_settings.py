@@ -276,7 +276,7 @@ class DefaultTestSettings:
                 "ENGINE": "django.db.backends.mysql",
                 "NAME": "test",
                 "USER": "root",
-                "PASSWORD": "cc3721b",
+                "PASSWORD": "password",
                 "HOST": "127.0.0.1",
                 "PORT": 3306,
             }
@@ -288,7 +288,7 @@ class DefaultTestSettings:
                         "ENGINE": "django.db.backends.mysql",
                         "NAME": "other",
                         "USER": "root",
-                        "PASSWORD": "cc3721b",
+                        "PASSWORD": "password",
                         "HOST": "127.0.0.1",
                         "PORT": 3306,
                     }
