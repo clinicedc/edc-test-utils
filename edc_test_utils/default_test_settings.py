@@ -215,6 +215,7 @@ class DefaultTestSettings:
             SUBJECT_VISIT_MODEL=f"{self.app_name}.subjectvisit",
             SUBJECT_VISIT_MISSED_MODEL=f"{self.app_name}.subjectvisitmissed",
             SUBJECT_REQUISITION_MODEL=f"{self.app_name}.subjectrequisition",
+            SUBJECT_REFUSAL_MODEL=f"{self.app_name}.subjectrefusal",
             SUBJECT_APP_LABEL=f"{self.app_name}",
             ADVERSE_EVENT_ADMIN_SITE="adverse_event_app_admin",
             ADVERSE_EVENT_APP_LABEL="adverse_event_app",
@@ -275,7 +276,7 @@ class DefaultTestSettings:
                 "ENGINE": "django.db.backends.mysql",
                 "NAME": "test",
                 "USER": "root",
-                "PASSWORD": "mysql",
+                "PASSWORD": "cc3721b",
                 "HOST": "127.0.0.1",
                 "PORT": 3306,
             }
@@ -287,7 +288,7 @@ class DefaultTestSettings:
                         "ENGINE": "django.db.backends.mysql",
                         "NAME": "other",
                         "USER": "root",
-                        "PASSWORD": "mysql",
+                        "PASSWORD": "cc3721b",
                         "HOST": "127.0.0.1",
                         "PORT": 3306,
                     }
