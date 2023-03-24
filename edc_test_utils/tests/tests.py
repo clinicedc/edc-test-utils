@@ -7,7 +7,6 @@ from ..default_test_settings import DefaultTestSettings
 
 class TestUtils(TestCase):
     def test_(self):
-
         os.environ["TRAVIS"] = ""
         base_dir = os.path.dirname(os.path.abspath(__file__))
 

@@ -10,7 +10,6 @@ class NaturalKeyTestHelperError(Exception):
 
 class NaturalKeyTestHelper(TestCase):
     def nk_test_natural_key_attr(self, *app_labels, exclude_models=None):
-
         """Asserts all models in given apps have a
         natural_key model method.
         """
