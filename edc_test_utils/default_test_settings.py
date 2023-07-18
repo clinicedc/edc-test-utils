@@ -275,8 +275,8 @@ class DefaultTestSettings:
             "default": {
                 "ENGINE": "django.db.backends.mysql",
                 "NAME": "test",
-                "USER": "root",
-                "PASSWORD": "",
+                "USER": "mysql",
+                "PASSWORD": "mysql",
                 "HOST": "127.0.0.1",
                 "PORT": 3306,
             }
@@ -287,8 +287,8 @@ class DefaultTestSettings:
                     "client": {
                         "ENGINE": "django.db.backends.mysql",
                         "NAME": "other",
-                        "USER": "root",
-                        "PASSWORD": "",
+                        "USER": "mysql",
+                        "PASSWORD": "mysql",
                         "HOST": "127.0.0.1",
                         "PORT": 3306,
                     }
