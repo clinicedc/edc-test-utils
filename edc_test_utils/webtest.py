@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 from warnings import warn
 
 from django.conf import settings
@@ -10,6 +13,9 @@ from edc_auth.models import Role
 
 style = color_style()
 
+if TYPE_CHECKING:
+    from django.contrib.auth.models import User
+
 
 def get_or_create_group(group_name):
     try:
@@ -21,8 +27,8 @@ def get_or_create_group(group_name):
 
 def login(
     testcase,
-    user=None,
-    superuser=None,
+    user: User | None = None,
+    superuser: bool | None = None,
     groups=None,
     roles=None,
     sites=None,
