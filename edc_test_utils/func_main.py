@@ -13,5 +13,7 @@ def func_main(project_settings, *project_tests):
     django.setup()
     tags = [t.split("=")[1] for t in sys.argv if t.startswith("--tag")]
     failfast = any([True for t in sys.argv if t.startswith("--failfast")])
-    failures = DiscoverRunner(failfast=failfast, tags=tags).run_tests(project_tests)
+    keepdb = any([True for t in sys.argv if t.startswith("--keepdb")])
+    opts = dict(failfast=failfast, tags=tags, keepdb=keepdb)
+    failures = DiscoverRunner(**opts).run_tests(project_tests)
     sys.exit(failures)
