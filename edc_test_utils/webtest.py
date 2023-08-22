@@ -33,7 +33,9 @@ def login(
     roles=None,
     sites=None,
     redirect_url=None,
+    extra_environ=None,
 ):
+    extra_environ = extra_environ or {}
     user = testcase.user if user is None else user
     user.is_superuser = True if superuser is None else superuser
     if user.is_superuser:
@@ -60,11 +62,16 @@ def login(
     user.userprofile.save()
     user.save()
     user.refresh_from_db()
-    form = (
-        testcase.app.get(reverse(redirect_url or settings.LOGIN_REDIRECT_URL))
-        .maybe_follow()
-        .form
+    response = testcase.app.get(
+        reverse(redirect_url or settings.LOGIN_REDIRECT_URL), extra_environ=extra_environ
     )
+    response = response.maybe_follow(extra_environ=extra_environ)
+    for index, form in response.forms.items():
+        if form.action == "/i18n/setlang/":
+            # exclude the locale form
+            continue
+        else:
+            break
     form["username"] = user.username
     form["password"] = "pass"  # nosec B105
-    return form.submit()
+    return form.submit(extra_environ=extra_environ)
