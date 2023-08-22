@@ -54,6 +54,7 @@ class DefaultTestSettings:
         add_dashboard_middleware=None,
         add_lab_dashboard_middleware=None,
         add_adverse_event_dashboard_middleware=None,
+        add_multisite_middleware=None,
         template_dirs=None,
         excluded_apps=None,
         selected_database: str = None,
@@ -95,6 +96,8 @@ class DefaultTestSettings:
             self.settings["TEMPLATES"][0]["DIRS"] = template_dirs
 
         self.update_root_urlconf(use_test_urls)
+        if not add_multisite_middleware:
+            self.settings["MIDDLEWARE"].remove("multisite.middleware.DynamicSiteMiddleware")
 
         if add_dashboard_middleware:
             self.settings["MIDDLEWARE"].extend(
@@ -180,6 +183,7 @@ class DefaultTestSettings:
                 "django.contrib.auth.middleware.AuthenticationMiddleware",
                 "django.contrib.messages.middleware.MessageMiddleware",
                 "django.middleware.clickjacking.XFrameOptionsMiddleware",
+                "multisite.middleware.DynamicSiteMiddleware",
                 "django.contrib.sites.middleware.CurrentSiteMiddleware",
             ],
             LANGUAGE_CODE="en-us",
