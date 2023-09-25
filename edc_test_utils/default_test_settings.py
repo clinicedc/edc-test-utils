@@ -177,7 +177,7 @@ class DefaultTestSettings:
             MIDDLEWARE=[
                 "django.middleware.security.SecurityMiddleware",
                 "django.contrib.sessions.middleware.SessionMiddleware",
-                # "django.middleware.locale.LocaleMiddleware",
+                "django.middleware.locale.LocaleMiddleware",
                 "django.middleware.common.CommonMiddleware",
                 "django.middleware.csrf.CsrfViewMiddleware",
                 "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -186,7 +186,7 @@ class DefaultTestSettings:
                 "multisite.middleware.DynamicSiteMiddleware",
                 "django.contrib.sites.middleware.CurrentSiteMiddleware",
             ],
-            LANGUAGE_CODE="en-us",
+            LANGUAGE_CODE="en",
             TIME_ZONE="UTC",
             USE_I18N=True,
             USE_L10N=True,
