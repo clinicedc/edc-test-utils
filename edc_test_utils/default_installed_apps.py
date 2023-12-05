@@ -28,6 +28,7 @@ DEFAULT_EDC_INSTALLED_APPS = [
     "edc_fieldsets.apps.AppConfig",
     "edc_facility.apps.AppConfig",
     "edc_form_describer.apps.AppConfig",
+    "edc_form_runners.apps.AppConfig",
     "edc_identifier.apps.AppConfig",
     "edc_lab_dashboard.apps.AppConfig",
     "edc_label.apps.AppConfig",
