@@ -15,6 +15,7 @@ def get_user_for_tests(
     username: str | None = None,
     codenames: list[tuple[str, str]] | None = None,
     view_only: bool | None = None,
+    is_superuser: bool | None = None,
 ) -> User:
     """Returns a User model instance ready for tests.
 
@@ -33,6 +34,7 @@ def get_user_for_tests(
     )
     user.is_active = True
     user.is_staff = True
+    user.is_superuser = False if is_superuser is None else is_superuser
     user.save()
     user.refresh_from_db()
 
