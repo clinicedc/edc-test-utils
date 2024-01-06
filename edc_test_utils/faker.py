@@ -26,26 +26,28 @@ class EdcBaseProvider(BaseProvider):
         )
 
     def dob_for_consenting_adult(self) -> date:
-        consent = site_consents.get_consent(
-            consent_model=self.consent_model, report_datetime=get_utcnow()
+        consent = site_consents.get_consent_definition(
+            model=self.consent_model, report_datetime=get_utcnow()
         )
         years = choice(range(consent.age_is_adult, consent.age_max + 1))  # nosec B311
         return (get_utcnow() - relativedelta(years=years)).date()
 
     def dob_for_consenting_minor(self) -> date:
-        consent = site_consents.get_consent(self.consent_model, report_datetime=get_utcnow())
+        consent = site_consents.get_consent_definition(
+            model=self.consent_model, report_datetime=get_utcnow()
+        )
         years = consent.age_min - 1
         return (get_utcnow() - relativedelta(years=years)).date()
 
     def age_for_consenting_adult(self) -> int:
-        consent = site_consents.get_consent(
-            consent_model=self.consent_model, report_datetime=get_utcnow()
+        consent = site_consents.get_consent_definition(
+            model=self.consent_model, report_datetime=get_utcnow()
         )
         return choice(range(consent.age_is_adult, consent.age_max + 1))  # nosec B311
 
     def age_for_consenting_minor(self) -> int:
-        consent = site_consents.get_consent(
-            consent_model=self.consent_model, report_datetime=get_utcnow()
+        consent = site_consents.get_consent_definition(
+            model=self.consent_model, report_datetime=get_utcnow()
         )
         return choice(range(consent.age_min, consent.age_is_adult + 1))  # nosec B311
 
