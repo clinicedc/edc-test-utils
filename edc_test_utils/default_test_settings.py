@@ -107,7 +107,7 @@ class DefaultTestSettings:
         if add_dashboard_middleware:
             self.settings["MIDDLEWARE"].extend(
                 [
-                    "edc_protocol.middleware.ProtocolMiddleware",
+                    "edc_protocol.middleware.ResearchProtocolConfigMiddleware",
                     "edc_dashboard.middleware.DashboardMiddleware",
                     "edc_subject_dashboard.middleware.DashboardMiddleware",
                     "edc_listboard.middleware.DashboardMiddleware",
