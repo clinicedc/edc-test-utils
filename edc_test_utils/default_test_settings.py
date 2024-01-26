@@ -71,6 +71,8 @@ class DefaultTestSettings:
             if app not in (excluded_apps or [])
         ]
         self.installed_apps.extend(kwargs.get("EXTRA_INSTALLED_APPS") or [])
+        self.installed_apps.remove("edc_appconfig.apps.AppConfig")
+        self.installed_apps.append("edc_appconfig.apps.AppConfig")
         self.etc_dir = (
             etc_dir
             or kwargs.get("ETC_DIR")
