@@ -214,7 +214,7 @@ class DefaultTestSettings:
                 "data_manager": "someone@example.com",
                 "tmg": "someone@example.com",
             },
-            EMAIL_ENABLED=True,
+            EMAIL_ENABLED=False,
             INDEX_PAGE="http://localhost:8000",
             SENTRY_ENABLED=False,
             TWILIO_ENABLED=False,
