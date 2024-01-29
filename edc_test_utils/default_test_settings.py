@@ -71,6 +71,11 @@ class DefaultTestSettings:
             if app not in (excluded_apps or [])
         ]
         self.installed_apps.extend(kwargs.get("EXTRA_INSTALLED_APPS") or [])
+        try:
+            self.installed_apps.remove("edc_appconfig.apps.AppConfig")
+        except ValueError:
+            pass
+        self.installed_apps.append("edc_appconfig.apps.AppConfig")
         self.etc_dir = (
             etc_dir
             or kwargs.get("ETC_DIR")
@@ -102,7 +107,7 @@ class DefaultTestSettings:
         if add_dashboard_middleware:
             self.settings["MIDDLEWARE"].extend(
                 [
-                    "edc_protocol.middleware.ProtocolMiddleware",
+                    "edc_protocol.middleware.ResearchProtocolConfigMiddleware",
                     "edc_dashboard.middleware.DashboardMiddleware",
                     "edc_subject_dashboard.middleware.DashboardMiddleware",
                     "edc_listboard.middleware.DashboardMiddleware",
@@ -209,7 +214,7 @@ class DefaultTestSettings:
                 "data_manager": "someone@example.com",
                 "tmg": "someone@example.com",
             },
-            EMAIL_ENABLED=True,
+            EMAIL_ENABLED=False,
             INDEX_PAGE="http://localhost:8000",
             SENTRY_ENABLED=False,
             TWILIO_ENABLED=False,

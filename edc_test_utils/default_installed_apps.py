@@ -58,4 +58,5 @@ DEFAULT_EDC_INSTALLED_APPS = [
     "edc_visit_tracking.apps.AppConfig",
     "adverse_event_app.apps.AppConfig",
     "edc_auth.apps.AppConfig",
+    "edc_appconfig.apps.AppConfig",
 ]
