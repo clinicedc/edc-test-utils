@@ -253,6 +253,7 @@ class DefaultTestSettings:
             EDC_RANDOMIZATION_REGISTER_DEFAULT_RANDOMIZER=True,
             EDC_RANDOMIZATION_SKIP_VERIFY_CHECKS=True,
             EDC_SITES_MODULE_NAME=None,
+            MULTISITE_REGISTER_POST_MIGRATE_SYNC_ALIAS=False,
             DATA_DICTIONARY_APP_LABELS=[],
             DEFAULT_FILE_STORAGE="inmemorystorage.InMemoryStorage",
             MIGRATION_MODULES=get_migrations_module(),
@@ -267,7 +268,9 @@ class DefaultTestSettings:
                 os.mkdir(key_path)
             auto_create_keys = True if len(os.listdir(key_path)) == 0 else False
             self.settings.update(
-                DEBUG=False, KEY_PATH=key_path, AUTO_CREATE_KEYS=auto_create_keys
+                DEBUG=False,
+                DJANGO_CRYPTO_FIELDS_KEY_PATH=key_path,
+                AUTO_CREATE_KEYS=auto_create_keys,
             )
 
     def check_github_actions(self):
