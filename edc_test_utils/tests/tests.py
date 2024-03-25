@@ -44,5 +44,5 @@ class TestUtils(TestCase):
                 etc_dir=os.path.join(base_dir, "etc"),
             ).settings
 
-        self.assertTrue(os.path.exists(DEFAULT_SETTINGS.get("KEY_PATH")))
+        self.assertTrue(os.path.exists(DEFAULT_SETTINGS.get("DJANGO_CRYPTO_FIELDS_KEY_PATH")))
         self.assertIn("AUTO_CREATE_KEYS", DEFAULT_SETTINGS)
