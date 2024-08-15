@@ -1,19 +1,14 @@
 from __future__ import annotations
 
-import sys
+from warnings import warn
 
-import django
-from django.conf import settings
-from django.test.runner import DiscoverRunner
+from edc_test_settings.func_main import func_main as new_func_main
 
 
 def func_main(project_settings, *project_tests):
-    if not settings.configured:
-        settings.configure(**project_settings)
-    django.setup()
-    tags = [t.split("=")[1] for t in sys.argv if t.startswith("--tag")]
-    failfast = any([True for t in sys.argv if t.startswith("--failfast")])
-    keepdb = any([True for t in sys.argv if t.startswith("--keepdb")])
-    opts = dict(failfast=failfast, tags=tags, keepdb=keepdb)
-    failures = DiscoverRunner(**opts).run_tests(project_tests)
-    sys.exit(failures)
+    warn(
+        "This path is deprecated in favor of edc_test_settings.func_main2",
+        DeprecationWarning,
+        stacklevel=2,
+    )
+    return new_func_main(project_settings, *project_tests)
