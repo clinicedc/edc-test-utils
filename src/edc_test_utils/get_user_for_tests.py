@@ -4,8 +4,8 @@ from typing import TYPE_CHECKING
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
+from django.contrib.sites.models import Site
 from edc_sites.site import SiteNotRegistered, sites
-from edc_sites.utils import get_site_model_cls
 
 if TYPE_CHECKING:
     from django.contrib.auth.models import User
@@ -48,7 +48,7 @@ def get_user_for_tests(
             "No sites have been registered!"
         )
     # will raise an exception if edc_auth not installed
-    user.userprofile.sites.add(get_site_model_cls().objects.get_current())
+    user.userprofile.sites.add(Site.objects.get_current())
 
     if codenames is None:
         codenames = [

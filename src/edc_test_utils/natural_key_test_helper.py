@@ -14,6 +14,7 @@ class NaturalKeyTestHelper(TestCase):
         natural_key model method.
         """
         exclude_models = exclude_models or []
+        exclude_models = [s.lower() for s in exclude_models]
         for app_label in app_labels:
             models = django_apps.get_app_config(app_label).get_models()
             for model in models:
@@ -33,6 +34,7 @@ class NaturalKeyTestHelper(TestCase):
         manager method.
         """
         exclude_models = exclude_models or []
+        exclude_models = [s.lower() for s in exclude_models]
         for app_label in app_labels:
             models = django_apps.get_app_config(app_label).get_models()
             for model in models:

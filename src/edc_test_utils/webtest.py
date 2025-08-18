@@ -41,7 +41,8 @@ def login(
     if user.is_superuser:
         warn(
             style.WARNING(
-                "\nWarning: Running test where logged in user is a superuser. See login() \n"
+                "\nWarning: Running test where logged in "
+                "user is a superuser. See login() \n"
             )
         )
     user.is_active = True
@@ -63,7 +64,8 @@ def login(
     user.save()
     user.refresh_from_db()
     response = testcase.app.get(
-        reverse(redirect_url or settings.LOGIN_REDIRECT_URL), extra_environ=extra_environ
+        reverse(redirect_url or settings.LOGIN_REDIRECT_URL),
+        extra_environ=extra_environ,
     )
     response = response.maybe_follow(extra_environ=extra_environ)
     for index, form in response.forms.items():
