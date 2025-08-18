@@ -1,4 +1,0 @@
-include AUTHORS.rst CHANGES.rst LICENSE VERSION
-include MANIFEST.in
-include *.rst
-include */locale/*/LC_MESSAGES/*.mo
